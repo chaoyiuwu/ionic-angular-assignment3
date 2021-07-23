@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Pizza App
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Pizza App</ion-title>
+    </ion-toolbar>
+  </ion-header>
+<ion-grid>
+  <ion-row>
+    <ion-col><ion-img style="width: 80px; height: 80px;"  src="https://image.flaticon.com/icons/png/512/3132/3132693.png"></ion-img></ion-col>
+    <ion-col class="ion-align-self-end"><ion-button color="dark">Manager</ion-button></ion-col>
+  </ion-row>
+  
+</ion-grid>
+  <ion-grid [fixed]="true">
+    <ion-row>
+      <ion-col> <ion-button class="number_button" size="small" (click)="selectQuantity(1)"> 1 </ion-button> </ion-col>
+      <ion-col> <ion-button class="number_button"size="small" (click)="selectQuantity(2)"> 2 </ion-button> </ion-col>
+      <ion-col> <ion-button class="number_button" size="small" (click)="selectQuantity(3)"> 3 </ion-button> </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col> <ion-button class="number_button" size="small" (click)="selectQuantity(4)"> 4 </ion-button> </ion-col>
+      <ion-col> <ion-button class="number_button" size="small" (click)="selectQuantity(5)"> 5 </ion-button> </ion-col>
+      <ion-col> <ion-button class="number_button" size="small" (click)="selectQuantity(6)"> 6 </ion-button> </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col> <ion-button class="number_button" size="small" (click)="selectQuantity(7)"> 7 </ion-button> </ion-col>
+      <ion-col> <ion-button class="number_button" size="small" (click)="selectQuantity(8)"> 8 </ion-button> </ion-col>
+      <ion-col> <ion-button class="number_button" size="small" (click)="selectQuantity(9)"> 9 </ion-button> </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col> <ion-button color="warning" size="small"> Reset </ion-button> </ion-col>
+      <ion-col> <ion-button class="number_button" size="small" (click)="selectQuantity(0)"> 0 </ion-button> </ion-col>
+      <ion-col> <ion-button class="add_button" color="success" size="small" (click)="AddPizza()"> Add </ion-button> </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+	  <ion-row>
+		  <ion-col class="ion-align-self-center">
+			<ion-list>
+				<ion-list-header>
+					<ion-label>Toppings</ion-label>
+				</ion-list-header>
+				
+				<ion-item-sliding *ngFor="let topping of AvailableToppings">
+					<ion-item button color="light" (click)="selectTopping(topping)" [class.highlight]="topping === selectedTopping">{{ topping }}</ion-item>
+				</ion-item-sliding>
+			</ion-list>
+		  </ion-col>
+
+		  <ion-col class="ion-align-self-center">
+		  	<ion-list>
+				<ion-list-header>
+					<ion-label>Size</ion-label>
+				  </ion-list-header>
+
+				  <ion-item-sliding *ngFor="let size of AvailableSize">
+					<ion-item button color="light" (click)="selectSize(size)" [class.highlight]="size === selectedSize">{{ size }}</ion-item>
+				</ion-item-sliding>
+			</ion-list>
+		  </ion-col>
+	  </ion-row>
+  </ion-grid>
+</ion-content>
