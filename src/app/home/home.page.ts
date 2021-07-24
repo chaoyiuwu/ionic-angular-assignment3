@@ -50,6 +50,19 @@ export class HomePage {
       console.log('onDidDismiss resolved with role', role);
     }
     else {
+        const alert = await this.alertController.create({
+          cssClass: 'custom-alert',
+          header: 'SUCCESS',
+          subHeader: '',
+          message: this.selectedQuantity + ' ' + this.selectedSize + ' pizza with ' + this.selectedTopping +  ' has been added to the cart.',
+          buttons: ['OK']
+        });
+    
+        await alert.present();
+    
+        const { role } = await alert.onDidDismiss();
+        console.log('onDidDismiss resolved with role', role);
+
       this.service.AddPizzaToCurrentOrder(this.selectedTopping, this.selectedSize, this.selectedQuantity);
     }
   }
