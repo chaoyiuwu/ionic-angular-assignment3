@@ -12,10 +12,11 @@ import { CurrentOrderPage } from '../current-order/current-order.page';
   })
   export class ManagerService {
     private CurrentOrder : CurrentOrder;
-    private OrderHistory : OrderHistory[];
+    private OrderHistoryList : OrderHistory[];
 
     constructor() {
       this.CurrentOrder = new CurrentOrder();
+      this.OrderHistoryList = [];
     }
 
     public AddPizzaToCurrentOrder(topping : string, size : string, quantity: number){
@@ -29,6 +30,20 @@ import { CurrentOrderPage } from '../current-order/current-order.page';
     }
 
     public GetOrderHistory() : OrderHistory[]{
-      return this.OrderHistory;
+      return this.OrderHistoryList;
+    }
+
+    public RemovePizzaFromCurrentOrder(pizza : Pizza){
+      this.CurrentOrder.RemovePizza(pizza);
+      // debug
+      console.log(this.CurrentOrder.orderedPizza);
+    }
+
+    public AddToOrderHistory(){
+      this.OrderHistoryList.push(new OrderHistory(this.CurrentOrder, "to add time"));
+    }
+
+    public ResetCurrentOrder(){
+      this.CurrentOrder = null;
     }
   }

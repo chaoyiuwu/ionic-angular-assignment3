@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { ManagerService } from '../Services/manager.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class HomePage {
   selectedTopping : string;
   selectedSize : string;
 
-  constructor(private ManagerService: ManagerService) {
+  constructor(private service: ManagerService) {
     this.selectedQuantity = 0;
     this.selectedSize = "";
     this.selectedTopping = "";
@@ -36,14 +37,12 @@ export class HomePage {
   }
 
   AddPizza(){
-    // probably need to call the service here
     if (this.selectedQuantity == 0 || this.selectedSize == "" || this.selectedTopping == ""){
       console.log("Cannot add");
+      // to-do: alert
     }
     else {
-      this.ManagerService.AddPizzaToCurrentOrder(this.selectedTopping, this.selectedSize, this.selectedQuantity);
+      this.service.AddPizzaToCurrentOrder(this.selectedTopping, this.selectedSize, this.selectedQuantity);
     }
-
   }
-
 }

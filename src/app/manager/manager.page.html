@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Pizza App
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-button color="dark" [routerLink]="['/currentorder']">
+        CHECK CURRENT ORDER
+      </ion-button>
+    </ion-row>
+    <ion-row>
+      <ion-button color="dark">
+        UDPATE CURRENT ORDER
+      </ion-button>
+    </ion-row>
+    <ion-row>
+      <ion-button color="dark">
+        PREVIOUS ORDERS
+      </ion-button>
+    </ion-row>
+    <ion-row>
+      <ion-button color="dark" (click)="ToNewOrderPage()">
+        NEW ORDER
+      </ion-button>
+    </ion-row>
+  </ion-grid>
+
+
+
+
+  </ion-content>
