@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 import { ManagerService } from '../Services/manager.service';
 
 @Component({
@@ -15,10 +15,8 @@ export class HomePage {
   selectedTopping : string;
   selectedSize : string;
 
-  constructor(private service: ManagerService) {
-    this.selectedQuantity = 0;
-    this.selectedSize = "";
-    this.selectedTopping = "";
+  constructor(private service: ManagerService, private alertController : AlertController) {
+    this.resetSelection();
   }
 
   selectQuantity(quantity: number){
@@ -36,13 +34,29 @@ export class HomePage {
     this.selectedSize = size;
   }
 
-  AddPizza(){
+  async AddPizza(){
     if (this.selectedQuantity == 0 || this.selectedSize == "" || this.selectedTopping == ""){
-      console.log("Cannot add");
-      // to-do: alert
+      const alert = await this.alertController.create({
+        cssClass: 'custom-alert',
+        header: '',
+        subHeader: 'Incomplete Selection',
+        message: 'Cannot add pizza with incomplete selections.',
+        buttons: ['OK']
+      });
+  
+      await alert.present();
+  
+      const { role } = await alert.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
     }
     else {
       this.service.AddPizzaToCurrentOrder(this.selectedTopping, this.selectedSize, this.selectedQuantity);
     }
+  }
+
+  resetSelection(){
+    this.selectedQuantity = 0;
+    this.selectedSize = "";
+    this.selectedTopping = "";
   }
 }

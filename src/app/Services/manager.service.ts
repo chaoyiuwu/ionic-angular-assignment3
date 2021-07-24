@@ -1,49 +1,60 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 import { Pizza } from '../Models/pizza';
 import { CurrentOrder } from "../Models/currentOrder";
 import { OrderHistory } from '../Models/orderHistory';
-import { CurrentOrderPage } from '../current-order/current-order.page';
   
   @Injectable({
     providedIn: 'root'
   })
   export class ManagerService {
-    private CurrentOrder : CurrentOrder;
-    private OrderHistoryList : OrderHistory[];
+    private currentOrder : CurrentOrder;
+    private orderHistoryList : OrderHistory[];
 
+    pipe: DatePipe;
     constructor() {
-      this.CurrentOrder = new CurrentOrder();
-      this.OrderHistoryList = [];
+      this.currentOrder = null;
+      this.orderHistoryList = [];
     }
 
     public AddPizzaToCurrentOrder(topping : string, size : string, quantity: number){
-      this.CurrentOrder.AddPizza(new Pizza(topping, size, quantity));
+      if (this.currentOrder == null){
+        this.currentOrder = new CurrentOrder();
+      }
+      this.currentOrder.AddPizza(new Pizza(topping, size, quantity));
       // debug
-      console.log(this.CurrentOrder.orderedPizza);
+      console.log(this.currentOrder.orderedPizza);
     }
 
     public GetCurrentOrder() : CurrentOrder {
-      return this.CurrentOrder;
+      return this.currentOrder;
     }
 
     public GetOrderHistory() : OrderHistory[]{
-      return this.OrderHistoryList;
+      return this.orderHistoryList;
     }
 
     public RemovePizzaFromCurrentOrder(pizza : Pizza){
-      this.CurrentOrder.RemovePizza(pizza);
+      this.currentOrder.RemovePizza(pizza);
+
       // debug
-      console.log(this.CurrentOrder.orderedPizza);
+      console.log(this.currentOrder.orderedPizza);
+
+      if (this.currentOrder.orderedPizza.length == 0) {
+        this.ResetCurrentOrder();
+      }
     }
 
     public AddToOrderHistory(){
-      this.OrderHistoryList.push(new OrderHistory(this.CurrentOrder, "to add time"));
+      this.pipe= new DatePipe('en-US');
+      const now = Date.now();
+      const formattedDate = this.pipe.transform(now, 'short');  
+      this.orderHistoryList.push(new OrderHistory(this.currentOrder, formattedDate));
+      this.ResetCurrentOrder();
     }
 
     public ResetCurrentOrder(){
-      this.CurrentOrder = null;
+      this.currentOrder = null;
     }
   }

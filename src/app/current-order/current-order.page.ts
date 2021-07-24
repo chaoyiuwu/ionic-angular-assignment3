@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CurrentOrder } from '../Models/currentOrder';
+import { Pizza } from '../Models/pizza';
 import { ManagerService } from '../Services/manager.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-current-order',
@@ -9,9 +11,26 @@ import { ManagerService } from '../Services/manager.service';
 })
 export class CurrentOrderPage {
 
-  CurrentOrder : CurrentOrder;
-  constructor(private ManagerService : ManagerService) {
-    this.CurrentOrder = this.ManagerService.GetCurrentOrder();
+  currentOrder : CurrentOrder;
+
+  constructor(private service : ManagerService, private router:Router) {
+    this.currentOrder =null;
   }
 
+  ionViewWillEnter() {
+    this.currentOrder = this.service.GetCurrentOrder();
+  }
+
+  deletePizza(pizza: Pizza){
+    this.service.RemovePizzaFromCurrentOrder(pizza);
+    this.currentOrder = this.service.GetCurrentOrder();
+  }
+
+  placeOrder(){
+    if (this.currentOrder != null ){
+      this.service.AddToOrderHistory();
+      this.router.navigateByUrl("/manager");
+    }
+    
+  }
 }

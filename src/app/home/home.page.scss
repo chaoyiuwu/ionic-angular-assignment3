@@ -1,16 +1,14 @@
-ion-grid{
-    --ion-grid-width-xs: 100%;
-}
-.number_button{
+.number-button{
     --padding-start: 30px;
     --padding-end: 30px;
 }
 
-.add_button {
+.add-button {
     --padding-start: 20px;
     --padding-end: 20px;
 }
 
-.highlight {
-    background-color: #FFFF33 !important;
- }
+.custom-alert {
+    --background: #e5e5e5;
+  }
+

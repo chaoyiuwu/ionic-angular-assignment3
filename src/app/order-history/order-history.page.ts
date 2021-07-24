@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ManagerService } from '../Services/manager.service';
+import { OrderHistory } from '../Models/orderHistory';
 
 @Component({
   selector: 'app-order-history',
@@ -6,7 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['order-history.page.scss']
 })
 export class OrderHistoryPage {
+  orderHistoryList : OrderHistory[];
+  constructor(private service : ManagerService) {
+    this.orderHistoryList = [];
+  }
 
-  constructor() {}
+  ionViewWillEnter() {
+    this.orderHistoryList = this.service.GetOrderHistory();
+  }
 
 }
